@@ -1,26 +1,21 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, abstractclassmethod
 import requests
 
 class Supplier(ABC):
 
-    def __init__(self, name, url, search_type, search_parameters):
+    def __init__(self, name, url, search_parameters):
         if search_type not in ['hotel', 'destination']:
             raise Exception('Error: Invalid Search Type. Search Type should be either hotel or destination')
         self._name = name
         self._supplier_url = url
         self._raw_data = None
-        self._search_type = search_type
-        if search_type == 'hotel' and not isinstance(search_parameters, list):
-            self._search_parameters = [search_parameters]
-        else:
-            self._search_parameters = search_parameters
+        self._search_parameters = search_parameters
 
     def fetch_data(self):
         response = requests.get(self.supplier_url)
         if response.status_code != 200:
             raise Exception('Error: Failed to connect to supplier. Please try again')
         self._raw_data = response.json
-
 
     @abstractmethod
     def return_raw_data(self):

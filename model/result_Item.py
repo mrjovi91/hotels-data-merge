@@ -1,46 +1,42 @@
 class ResultItem:
-    def __init__(self, id, destination_id, name, cell_y):
-        self.positionX = positionX
-        self.positionY = positionY
-        self.path = False
-        self.computed = False
-        self.current = False
-        self.visited = False
-        self.backtracked = False
-        self.walls = {
-            'bottom': [True,  positionX*cell_x, positionY*cell_y + cell_y, positionX*cell_x + cell_x, positionY*cell_y + cell_y],
-            'right': [True,  positionX*cell_x + cell_x, positionY*cell_y, positionX*cell_x + cell_x, positionY*cell_y + cell_y]
-        }
+    def __init__(self, id, destination_id, name, location, description, amenities, images, booking_conditions):
+        self._id = id
+        self._destination_id = destination_id
+        self._name = name
+        self._location = location
+        self._description = description
+        self._amenities= amenities
+        self._images = images
+        self._booking_conditions = booking_conditions
 
-    @abstractclassmethod
-    def get_id(cls, data_item):
-        pass
+    @property
+    def id(self):
+        return self._id
 
-    @abstractclassmethod
-    def get_destination_id(cls, data_item):
-        pass
+    @property
+    def destination_id(self):
+        return self._destination_id
 
-    @abstractclassmethod
-    def get_name(cls, data_item):
-        pass
+    @property
+    def name(self):
+        return self._name
 
-    @abstractclassmethod
-    def get_location(cls, data_item):
-        pass
+    @property
+    def location(self):
+        return self._location
 
-    @abstractclassmethod
-    def get_description(cls, data_item):
-        pass
+    @property
+    def description(self):
+        return self._description
 
-    @abstractclassmethod
-    def get_amenities(cls, data_item):
-        pass
+    @property
+    def amenities(self):
+        return self._amenities
 
-    @abstractclassmethod
-    def get_images(cls, data_item):
-        pass
+    @property
+    def images(self):
+        return self._images
 
-    @abstractclassmethod
-    def get_booking_conditions(cls, data_item):
-        pass
-
+    @property
+    def booking_conditions(self):
+        return self._booking_conditions
