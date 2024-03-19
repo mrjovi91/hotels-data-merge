@@ -16,6 +16,10 @@ def route_get_my_ip():
 def search():
     return ApiController.search_hotels(request)
 
+@routes.route("/test", methods = ['POST'])
+def test():
+    return ApiController.test(request)
+
 # @routes.route("/submit", methods = ['POST'])
 # def submit():
 #     return SubmissionController.store(request)

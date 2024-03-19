@@ -30,11 +30,11 @@ class Location:
 
     def json(self):
         return {
+            'lat': self._lat,
+            'lng': self._lng,
             'address': self._address,
             'city': self._city,
-            'country': self._country,
-            'lat': self._lat,
-            'lng': self._lng
+            'country': self._country
         }
     
     def __repr__(self):

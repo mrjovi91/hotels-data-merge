@@ -1,3 +1,6 @@
+from integrations.suppliers.acme import AcmeSupplier
+from integrations.suppliers.test_supplier import TestSupplier
+
 import datetime
 from flask import render_template, request, session, flash, redirect, url_for, jsonify
 import json
@@ -28,3 +31,16 @@ class ApiController:
             return jsonify({"result": "Please ensure that either hotel or destination is provided.", "status": "error"}), 400
         print(headers)
         return jsonify({'result': data, "status": "success"}), 200
+
+    @classmethod
+    def test(cls, request):
+        headers = dict(request.headers)
+        # headers.pop('X-Api-Key', None)
+        data = request.get_json()
+        print(data)
+        print(headers)
+        supplier = AcmeSupplier()
+        # supplier = TestSupplier(url=data['url'])
+        supplier.fetch_data()
+        formatted_data = supplier.return_formatted_data()
+        return jsonify({'result': formatted_data.json(), "status": "success"}), 200

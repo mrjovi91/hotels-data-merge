@@ -5,7 +5,7 @@ class ResultItem:
         self._name = name
         self._location = location
         self._description = description
-        self._amenities= amenities
+        self._amenities = amenities
         self._images = images
         self._booking_conditions = booking_conditions
 
@@ -40,3 +40,18 @@ class ResultItem:
     @property
     def booking_conditions(self):
         return self._booking_conditions
+
+    def json(self):
+        return {
+            'id': self._id,
+            'destination_id': self._destination_id,
+            'name': self._name,
+            'location': self._location.json(),
+            'description': self._description,
+            'amenities': self._amenities.json(),
+            'images': self._images,
+            'booking_conditions': self._booking_conditions
+        }
+
+    def __repr__(self):
+        return f'ResultItem: {self.json()}'
