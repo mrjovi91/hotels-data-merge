@@ -1,7 +1,7 @@
 from integrations.suppliers.supplier import Supplier
 from model.location import Location
 from model.result_Item import ResultItem
-from settings import settings
+from settings.settings import settings
 
 class PaperfliesSupplier(Supplier):
 
