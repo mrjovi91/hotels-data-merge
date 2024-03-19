@@ -46,10 +46,10 @@ class ResultItem:
             'id': self._id,
             'destination_id': self._destination_id,
             'name': self._name,
-            'location': self._location.json(),
+            'location': self._location.json() if self._location else None,
             'description': self._description,
-            'amenities': self._amenities.json(),
-            'images': self._images,
+            'amenities': self._amenities.json() if self._amenities else None,
+            'images': self._images.json() if self._images else None,
             'booking_conditions': self._booking_conditions
         }
 

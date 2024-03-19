@@ -63,8 +63,8 @@ class AcmeSupplier(Supplier):
 
     @classmethod
     def get_location(cls, data_item):
-        address = data_item['Address'].strip() if data_item['Address'] else ''
-        postal_code = data_item['PostalCode'].strip() if data_item['PostalCode'] else ''
+        address = data_item['Address'].strip() if isinstance(data_item['Address'], str) else ''
+        postal_code = data_item['PostalCode'].strip() if isinstance(data_item['PostalCode'], str) else ''
         final_address = f'{address} {postal_code}'.strip()
         if final_address == '':
             final_address = None

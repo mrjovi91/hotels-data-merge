@@ -1,4 +1,5 @@
 from integrations.suppliers.acme import AcmeSupplier
+from integrations.suppliers.patagonia import PatagoniaSupplier
 from integrations.suppliers.test_supplier import TestSupplier
 
 import datetime
@@ -39,8 +40,9 @@ class ApiController:
         data = request.get_json()
         print(data)
         print(headers)
-        supplier = AcmeSupplier()
+        supplier = PatagoniaSupplier(search_parameters=data)
         # supplier = TestSupplier(url=data['url'])
         supplier.fetch_data()
         formatted_data = supplier.return_formatted_data()
+        print(formatted_data.json())
         return jsonify({'result': formatted_data.json(), "status": "success"}), 200
