@@ -1,3 +1,4 @@
+from controllers.results_controller import ResultsController
 from integrations.suppliers.acme import AcmeSupplier
 from integrations.suppliers.paperflies import PaperfliesSupplier
 from integrations.suppliers.patagonia import PatagoniaSupplier
@@ -35,10 +36,12 @@ class ApiController:
         # headers.pop('X-Api-Key', None)
         data = request.get_json()
         print(data)
-        if 'hotels_id' not in data.keys() and 'destination_id' not in data.keys():
-            return jsonify({"result": "Please ensure that either hotel or destination is provided.", "status": "error"}), 400
+        # if 'hotels_id' not in data.keys() and 'destination_id' not in data.keys():
+        #     return jsonify({"result": "Please ensure that either hotel or destination is provided.", "status": "error"}), 400
         print(headers)
-        return jsonify({'result': data, "status": "success"}), 200
+        results = ResultsController(search_parameters=data)
+        results.search()
+        return jsonify({'result': results.json(), "status": "success"}), 200
 
     @classmethod
     def test(cls, request):
