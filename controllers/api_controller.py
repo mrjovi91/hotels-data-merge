@@ -1,4 +1,5 @@
 from integrations.suppliers.acme import AcmeSupplier
+from integrations.suppliers.paperflies import PaperfliesSupplier
 from integrations.suppliers.patagonia import PatagoniaSupplier
 from integrations.suppliers.test_supplier import TestSupplier
 
@@ -12,6 +13,12 @@ import traceback
 from settings.settings import settings
 
 class ApiController:
+    suppliers = {
+        "Acme": AcmeSupplier,
+        "Patagonia": PatagoniaSupplier,
+        "Paperflies": PaperfliesSupplier
+    }
+
     @classmethod
     def get_client_ip(cls, request):
         if 'X-Forwarded-For' in request.headers:
@@ -40,9 +47,10 @@ class ApiController:
         data = request.get_json()
         print(data)
         print(headers)
-        supplier = PatagoniaSupplier(search_parameters=data)
+        supplier = ApiController.suppliers[data['supplier']](search_parameters=data)
         # supplier = TestSupplier(url=data['url'])
         supplier.fetch_data()
         formatted_data = supplier.return_formatted_data()
         print(formatted_data.json())
+        # return jsonify(formatted_data.json()), 200
         return jsonify({'result': formatted_data.json(), "status": "success"}), 200

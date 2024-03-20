@@ -1,12 +1,10 @@
 from integrations.suppliers.supplier import Supplier
 from model.amenities import Amenities
-from model.image import Images
+from model.image import Image, Images
 from model.location import Location
 from model.result_Item import ResultItem
 from model.search_results import SearchResults
 from settings.settings import settings
-
-import re
 
 class PatagoniaSupplier(Supplier):
 
@@ -83,10 +81,18 @@ class PatagoniaSupplier(Supplier):
 
     @classmethod
     def get_images(cls, data_item):
+        if data_item['images'] is None:
+            return None
         images = Images()
-        images.images = data_item['images']
+        for image_type, image_items in data_item['images'].items():
+            for image_item in image_items:
+                image = Image(
+                    link = image_item['url'],
+                    description = image_item['description'],
+                    image_type = image_type
+                )
+                images.append(image)
         return images
-        
 
     @classmethod
     def get_booking_conditions(cls, data_item):
