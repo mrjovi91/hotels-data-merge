@@ -1,5 +1,6 @@
 from integrations.suppliers.supplier import Supplier
 from model.amenities import Amenities
+from model.image import Images
 from model.location import Location
 from model.result_Item import ResultItem
 from model.search_results import SearchResults
@@ -97,7 +98,9 @@ class AcmeSupplier(Supplier):
 
     @classmethod
     def get_images(cls, data_item):
-        return None
+        images = Images()
+        if data_item.get('images') is None:
+            return images
 
     @classmethod
     def get_booking_conditions(cls, data_item):

@@ -36,12 +36,12 @@ class ApiController:
         # headers.pop('X-Api-Key', None)
         data = request.get_json()
         print(data)
-        # if 'hotels_id' not in data.keys() and 'destination_id' not in data.keys():
-        #     return jsonify({"result": "Please ensure that either hotel or destination is provided.", "status": "error"}), 400
         print(headers)
         results = ResultsController(search_parameters=data)
         results.search()
-        return jsonify({'result': results.json(), "status": "success"}), 200
+        results.merge_result()
+        # return jsonify(formatted_data.json()), 200
+        return jsonify({'result': results.merged_results, "status": "success"}), 200
 
     @classmethod
     def test(cls, request):
@@ -49,11 +49,10 @@ class ApiController:
         # headers.pop('X-Api-Key', None)
         data = request.get_json()
         print(data)
+        # if 'hotels_id' not in data.keys() and 'destination_id' not in data.keys():
+        #     return jsonify({"result": "Please ensure that either hotel or destination is provided.", "status": "error"}), 400
         print(headers)
-        supplier = ApiController.suppliers[data['supplier']](search_parameters=data)
-        # supplier = TestSupplier(url=data['url'])
-        supplier.fetch_data()
-        formatted_data = supplier.return_formatted_data()
-        print(formatted_data.json())
-        # return jsonify(formatted_data.json()), 200
-        return jsonify({'result': formatted_data.json(), "status": "success"}), 200
+        results = ResultsController(search_parameters=data)
+        results.search()
+        return jsonify({'result': results.json(), "status": "success"}), 200
+        

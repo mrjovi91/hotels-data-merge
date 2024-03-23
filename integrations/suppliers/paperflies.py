@@ -79,19 +79,18 @@ class PaperfliesSupplier(Supplier):
 
     @classmethod
     def get_amenities(cls, data_item):
-        if data_item['amenities'] is None:
-            return None
         amenities = Amenities()
-
+        if data_item['amenities'] is None:
+            return amenities
         amenities.general = data_item['amenities']['general'] if data_item['amenities']['general'] else []
         amenities.room = data_item['amenities']['room'] if data_item['amenities']['room'] else []
         return amenities
 
     @classmethod
     def get_images(cls, data_item):
-        if data_item['images'] is None:
-            return None
         images = Images()
+        if data_item.get('images') is None:
+            return images
         for image_type, image_items in data_item['images'].items():
             for image_item in image_items:
                 image = Image(
