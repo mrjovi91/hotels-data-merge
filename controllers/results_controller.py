@@ -27,7 +27,6 @@ def similar_items_dedup(input_items):
         if len(output) > 0 and ' ' in item:
             item_type = item.split()[-1]
             for value in output.copy():
-                print(f'{value} == {item_type}:')
                 if value == item_type:
                     output.remove(value)
 
@@ -143,7 +142,6 @@ class ResultsController:
                         image_output[image['link']] = [image['description']]
                     else:
                         image_output[image['link']].append(image['description'])
-                print(image_output)
                 for link, description in image_output.copy().items():
                     new_description = sorted(description, key=sort_by_number_of_characters, reverse=True)[0]
                     if image_type not in merged_hotel['images'].keys():
@@ -163,8 +161,6 @@ class ResultsController:
 
     @property
     def merged_results(self):
-        if not self._merged_results:
-            raise Exception('Error: Please Merge Results first')
         return self._merged_results      
 
     def json(self):
