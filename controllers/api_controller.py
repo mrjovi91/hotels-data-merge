@@ -5,7 +5,7 @@ from integrations.suppliers.patagonia import PatagoniaSupplier
 from integrations.suppliers.test_supplier import TestSupplier
 
 import datetime
-from flask import render_template, request, session, flash, redirect, url_for, jsonify
+from flask import jsonify
 import json
 import requests
 import traceback
