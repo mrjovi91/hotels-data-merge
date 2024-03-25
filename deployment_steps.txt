@@ -1,0 +1,14 @@
+# Login to root account
+getenforce # Check SELinux
+setsebool httpd_can_network_connect 1 -P # Only need to run if above command result shows "Enforcing"
+
+mkdir -p /opt/apps
+cd /opt/apps
+git clone https://github.com/mrjovi91/hotels-data-merge
+cd hotels-data-merge
+docker build -t hotels-data-merge:0.01 .
+docker run --restart=always --name "hotels-data-merge" -p 127.0.0.1:8000:8000 -d hotels-data-merge:0.01
+vi hotels_data_merge_nginx.conf # Replace server name "hotelsdatamerge.test.local" with the domain name you would like to use
+
+cp hotels_data_merge_nginx.conf /etc/nginx/conf.d/
+systemctl restart nginx

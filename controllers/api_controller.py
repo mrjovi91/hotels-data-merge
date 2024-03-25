@@ -5,7 +5,7 @@ from integrations.suppliers.patagonia import PatagoniaSupplier
 from integrations.suppliers.test_supplier import TestSupplier
 
 import datetime
-from flask import render_template, request, session, flash, redirect, url_for, jsonify
+from flask import jsonify
 import json
 import requests
 import traceback
@@ -35,13 +35,18 @@ class ApiController:
         headers = dict(request.headers)
         # headers.pop('X-Api-Key', None)
         data = request.get_json()
-        print(data)
-        print(headers)
+        # if 'hotels_id' not in data.keys() and 'destination_id' not in data.keys():
+        #     return jsonify({"result": "Please ensure that either hotel or destination is provided.", "number_of_results": 0, "status": "error"}), 400
+        if not data.get('destination_id') and not data.get('hotels_id'):
+            return jsonify({"result": "Please ensure that either hotel or destination is provided.", "number_of_results": 0, "status": "error"}), 400
+
+        # print(data)
+        # print(headers)
         results = ResultsController(search_parameters=data)
         results.search()
         results.merge_result()
         # return jsonify(formatted_data.json()), 200
-        return jsonify({'result': results.merged_results, "status": "success"}), 200
+        return jsonify({'result': results.merged_results, "number_of_results": len(results.merged_results),"status": "success"}), 200
 
     @classmethod
     def test(cls, request):
